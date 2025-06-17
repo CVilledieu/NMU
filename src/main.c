@@ -11,7 +11,7 @@
 
 unsigned int GetCompiledVertexShaderObj(void);
 unsigned int GetCompiledFragShaderObj(void);
-void setShaderProgram(void);
+unsigned int setShaderProgram(void);
 
 
 int main(void){
@@ -47,22 +47,33 @@ int main(void){
 		0.0f, 0.5f, 0.0f
 	};
 
-
+	//Initialize and binding data to 1st buffer
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	setShaderProgram();
+	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3* sizeof(float), NULL);
+	glEnableVertexAttribArray(0);
+
+	unsigned int shaderProgram;
+	shaderProgram = setShaderProgram();
 
 	while(!glfwWindowShouldClose(wnd)){
 		
-		
-		
 		glClearColor(.2f,.3f,.3f,1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(wnd);
 		glfwPollEvents();
@@ -77,7 +88,8 @@ int main(void){
 unsigned int GetCompiledVertexShaderObj(void){
 	unsigned int vso;
 	vso = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vso, 1,&vertexShaderSource, NULL);
+	const char* vsrc = Get_vertexShaderSource();
+	glShaderSource(vso, 1, &vsrc, NULL);
 	glCompileShader(vso);
 	int ok =0;
 	glGetShaderiv(vso, GL_COMPILE_STATUS, &ok);
@@ -93,7 +105,8 @@ unsigned int GetCompiledVertexShaderObj(void){
 unsigned int GetCompiledFragShaderObj(void){
 	unsigned int fso;
 	fso = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fso, 1, &fragShaderSource, NULL);
+	const char* fsrc = Get_fragShaderSource();
+	glShaderSource(fso, 1, &fsrc, NULL);
 	glCompileShader(fso);
 
 	int ok = 0;
@@ -107,7 +120,7 @@ unsigned int GetCompiledFragShaderObj(void){
 }
 
 
-void setShaderProgram(){
+unsigned int setShaderProgram(){
 	unsigned int vertexShader;
 	vertexShader = GetCompiledVertexShaderObj();
 	if (vertexShader == 0){
@@ -129,5 +142,5 @@ void setShaderProgram(){
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-	return;
+	return shaderProgram;
 }

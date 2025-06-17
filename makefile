@@ -9,6 +9,9 @@ DEPd = $(SRCd)/depend
 
 
 SRC = $(patsubst %.c, %.o, $(wildcard $(SRCd)/*.c))
+SHD = $(patsubst %.c, %.o, $(wildcard shaders/*.c))
+
+PROJ = $(SRC) $(SHD)
 
 NAME_OUTPUT = -o bin/App
 
@@ -18,7 +21,7 @@ all: build clean
 %.o: %.c 
 	$(CC) -c $(CFLAGS) $^ -o $@
 
-build: $(SRC)
+build: $(PROJ)
 	$(CC)  $^ $(LDFLAGS)   $(NAME_OUTPUT) 
 
 

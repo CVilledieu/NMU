@@ -1,8 +1,9 @@
 #ifndef SHADERS_H
 #define SHADERS_H
 
-const char* vertexShaderSource;
-const char* fragShaderSource;
+
+const char* Get_vertexShaderSource(void);
+const char* Get_fragShaderSource(void);
 
 
 #endif
