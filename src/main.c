@@ -11,6 +11,7 @@
 
 unsigned int GetCompiledVertexShaderObj(void);
 unsigned int GetCompiledFragShaderObj(void);
+void setShaderProgram(void);
 
 
 int main(void){
@@ -53,23 +54,8 @@ int main(void){
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	unsigned int vertexShader;
-	vertexShader = GetCompiledVertexShaderObj();
-	if (vertexShader == 0){
-		return 0;
-	}
 
-	unsigned int fragmentShader;
-	fragmentShader = GetCompiledFragShaderObj();
-	if (!fragmentShader){
-		return 0;
-	}
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
+	setShaderProgram();
 
 	while(!glfwWindowShouldClose(wnd)){
 		
@@ -102,6 +88,8 @@ unsigned int GetCompiledVertexShaderObj(void){
 	return vso;
 }
 
+
+
 unsigned int GetCompiledFragShaderObj(void){
 	unsigned int fso;
 	fso = glCreateShader(GL_FRAGMENT_SHADER);
@@ -116,4 +104,30 @@ unsigned int GetCompiledFragShaderObj(void){
 	}
 
 	return fso;
+}
+
+
+void setShaderProgram(){
+	unsigned int vertexShader;
+	vertexShader = GetCompiledVertexShaderObj();
+	if (vertexShader == 0){
+		return 0;
+	}
+
+	unsigned int fragmentShader;
+	fragmentShader = GetCompiledFragShaderObj();
+	if (!fragmentShader){
+		return 0;
+	}
+
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	return;
 }
