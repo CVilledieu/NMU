@@ -2,13 +2,15 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <wndCalls.h>
+#include <shaders.h>
 
 #define STARTING_WIDTH 800
 #define STARTING_HEIGHT 600
 #define WND_TITLE "Needs More Upgrades"
 
 
-void handleUserInput(GLFWwindow* wnd);
+unsigned int GetCompiledVertexShaderObj(void);
+unsigned int GetCompiledFragShaderObj(void);
 
 
 int main(void){
@@ -37,6 +39,37 @@ int main(void){
 	glfwSetFramebufferSizeCallback(wnd, framebuffer_size_callback);
 	glfwSetKeyCallback(wnd, keyPressCallback);
 	
+	//Rendering info
+	float vertices[] ={
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+
+
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	unsigned int vertexShader;
+	vertexShader = GetCompiledVertexShaderObj();
+	if (vertexShader == 0){
+		return 0;
+	}
+
+	unsigned int fragmentShader;
+	fragmentShader = GetCompiledFragShaderObj();
+	if (!fragmentShader){
+		return 0;
+	}
+
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
 
 	while(!glfwWindowShouldClose(wnd)){
 		
@@ -55,3 +88,32 @@ int main(void){
 	return 0;
 }
 
+unsigned int GetCompiledVertexShaderObj(void){
+	unsigned int vso;
+	vso = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vso, 1,&vertexShaderSource, NULL);
+	glCompileShader(vso);
+	int ok =0;
+	glGetShaderiv(vso, GL_COMPILE_STATUS, &ok);
+	if(!ok){
+		printf("%s\n", "Vertex Shader failed to compile!");
+		return 0;
+	}
+	return vso;
+}
+
+unsigned int GetCompiledFragShaderObj(void){
+	unsigned int fso;
+	fso = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fso, 1, &fragShaderSource, NULL);
+	glCompileShader(fso);
+
+	int ok = 0;
+	glGetShaderiv(fso, GL_COMPILE_STATUS, &ok);
+	if(!ok){
+		printf("%s\n","Fragment Shader failed to compile");
+		return 0;
+	}
+
+	return fso;
+}
