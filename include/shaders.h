@@ -4,6 +4,6 @@
 
 const char* Get_vertexShaderSource(void);
 const char* Get_fragShaderSource(void);
-
+unsigned int ShaderProgram(void);
 
 #endif

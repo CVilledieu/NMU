@@ -3,15 +3,10 @@ CC = gcc
 CFLAGS = -I./include -Wall 
 LDFLAGS = -Llibs -lglfw3dll -lglfw3 -lopengl32
 
+SRC = $(patsubst %.c, %.o, $(wildcard src/*.c))
+Shaders = $(patsubst %.c, %.o, $(wildcard Shaders/*.c))
 
-SRCd = ./src
-DEPd = $(SRCd)/depend
-
-
-SRC = $(patsubst %.c, %.o, $(wildcard $(SRCd)/*.c))
-SHD = $(patsubst %.c, %.o, $(wildcard shaders/*.c))
-
-PROJ = $(SRC) $(SHD)
+Project_Dirs = $(SRC) $(Shaders)
 
 NAME_OUTPUT = -o bin/App
 
@@ -21,7 +16,7 @@ all: build clean
 %.o: %.c 
 	$(CC) -c $(CFLAGS) $^ -o $@
 
-build: $(PROJ)
+build: $(Project_Dirs)
 	$(CC)  $^ $(LDFLAGS)   $(NAME_OUTPUT) 
 
 
@@ -31,4 +26,5 @@ build: $(PROJ)
 .PHONY: clean
 
 clean:
-	rm -rf $(SRCd)/*.o 
+	rm -rf src/*.o
+	rm -rf shaders/*.o

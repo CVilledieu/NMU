@@ -1,17 +1,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
-#include <wndCalls.h>
+#include <util.h>
 #include <shaders.h>
 
 #define STARTING_WIDTH 800
 #define STARTING_HEIGHT 600
 #define WND_TITLE "Needs More Upgrades"
 
-
-unsigned int GetCompiledVertexShaderObj(void);
-unsigned int GetCompiledFragShaderObj(void);
-unsigned int setShaderProgram(void);
 
 
 int main(void){
@@ -39,108 +35,44 @@ int main(void){
 	//Callbacks found in wndCallbacks.c
 	glfwSetFramebufferSizeCallback(wnd, framebuffer_size_callback);
 	glfwSetKeyCallback(wnd, keyPressCallback);
-	
-	//Rendering info
-	float vertices[] ={
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
-	};
-
-	//Initialize and binding data to 1st buffer
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3* sizeof(float), NULL);
-	glEnableVertexAttribArray(0);
 
 	unsigned int shaderProgram;
-	shaderProgram = setShaderProgram();
+	shaderProgram = ShaderProgram();
 
+	float miniTriforce[] = {
+		0.0f, 0.5f, 0.0f, 	0.25f, 0.25f, 0.0f,	 -0.25f, 0.25f, 0.0f,
+		0.25f, 0.25f, 0.0f, 0.5f, 0.0f, 0.0f,	 0.0f, 0.0f, 0.0f,
+		-0.25f, 0.25f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+	};
+	unsigned int VAO, VBO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(miniTriforce), miniTriforce, GL_STATIC_DRAW);
+	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
+	glEnableVertexAttribArray(0);
+
+	//Draw loop
 	while(!glfwWindowShouldClose(wnd)){
-		
-		glClearColor(.2f,.3f,.3f,1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		float background[4] = {0.2f, 0.3f, 0.3f, 1.0f};
+		SetColor(background);
 
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		glfwSwapBuffers(wnd);
-		glfwPollEvents();
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 9);
+
+		DrawStepSupport(wnd);
 	}
 	
-
+	glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteProgram(shaderProgram);
 
 	glfwTerminate();
 	return 0;
 }
 
-unsigned int GetCompiledVertexShaderObj(void){
-	unsigned int vso;
-	vso = glCreateShader(GL_VERTEX_SHADER);
-	const char* vsrc = Get_vertexShaderSource();
-	glShaderSource(vso, 1, &vsrc, NULL);
-	glCompileShader(vso);
-	int ok =0;
-	glGetShaderiv(vso, GL_COMPILE_STATUS, &ok);
-	if(!ok){
-		printf("%s\n", "Vertex Shader failed to compile!");
-		return 0;
-	}
-	return vso;
-}
 
-
-
-unsigned int GetCompiledFragShaderObj(void){
-	unsigned int fso;
-	fso = glCreateShader(GL_FRAGMENT_SHADER);
-	const char* fsrc = Get_fragShaderSource();
-	glShaderSource(fso, 1, &fsrc, NULL);
-	glCompileShader(fso);
-
-	int ok = 0;
-	glGetShaderiv(fso, GL_COMPILE_STATUS, &ok);
-	if(!ok){
-		printf("%s\n","Fragment Shader failed to compile");
-		return 0;
-	}
-
-	return fso;
-}
-
-
-unsigned int setShaderProgram(){
-	unsigned int vertexShader;
-	vertexShader = GetCompiledVertexShaderObj();
-	if (vertexShader == 0){
-		return 0;
-	}
-
-	unsigned int fragmentShader;
-	fragmentShader = GetCompiledFragShaderObj();
-	if (!fragmentShader){
-		return 0;
-	}
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-	return shaderProgram;
-}

@@ -1,4 +1,4 @@
-#include <wndCalls.h>
+#include <util.h>
 
 void keyPressCallback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
 	if (action != GLFW_PRESS){
