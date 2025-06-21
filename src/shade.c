@@ -40,8 +40,6 @@ unsigned int ShaderProgram(){
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-    float uniValues[4] = {0.0, 0.0, 0.0, 1.0};
-    UpdateShaderUniform(shaderProgram, "uniColor", uniValues );
 	return shaderProgram;
 }
 
@@ -85,5 +83,5 @@ void UpdateShaderUniform(unsigned int ShaderID, char* uniformId, float* newValue
     }
 
     int uniformLocation = glGetUniformLocation(ShaderID, uniformId);
-    glUniform4f(uniformLocation, newValues[0], newValues[1], newValues[2], newValues[3]);
+    glUniform4f(uniformLocation, (float)newValues[0], (float)newValues[1], (float)newValues[2], (float)newValues[3]);
 }
