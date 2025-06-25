@@ -2,17 +2,14 @@
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
-#include <shaders.h>
 
-typedef struct vertexObject{
-    unsigned int* ID;
-    float Color[4];
-    char* uniformName;
-}vertexObject;
+unsigned int VertexShader_Obj(void);
+unsigned int FragmentShader_Obj(void);
 
 
 const char* Get_vertexShaderSource(void){
-const char* vertexShaderSource = "#version 330 core\n"
+const char* vertexShaderSource = 
+	"#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "void main(){\n"
         "gl_Position = vec4(aPos, 1.0);\n"
@@ -21,11 +18,12 @@ const char* vertexShaderSource = "#version 330 core\n"
 }
 
 const char* Get_fragShaderSource(void){
-const char* fragShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
+const char* fragShaderSource = 
+	"#version 330 core\n"
+    "out vec4 Fragment;\n"
     "uniform vec4 uniformColor;\n"
     "void main(){\n"
-        "FragColor = uniformColor;\n"
+        "Fragment = uniformColor;\n"
     "}\n\0";
     return fragShaderSource;
 }

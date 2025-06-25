@@ -5,14 +5,13 @@
 #include <shaders.h>
 
 
+//Draw loop support functions
+void StartLap();
+void EndLap(GLFWwindow* wnd);
+
 void BufferObject();
 void DrawObjects(unsigned int* VAO, int size);
-const float BasicTriangle[9] = {
-        -1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
-    };
-
+void BindMultiplePixels(unsigned int* VAOs);
 
 
 int main(void){
@@ -21,19 +20,17 @@ int main(void){
 		return -1;
 	}
 
-	unsigned int shaderProgram;
-	shaderProgram = ShaderProgram();
+	unsigned int shaderProgram = ShaderProgram();
 
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-
-	glBindVertexArray(VAO);
-	BufferObject();
-	
+	//unsigned int VAOs[2];
+	//VAOs[0] = 0;
+	//VAOs[1] = 0;
+	//glGenVertexArrays(2, VAOs);
+	//BindMultiplePixels(VAOs);
 
 	float uniValues[4] = {0.0, 1.0, 0.0, 1.0};
-
-   
+	Object* new = createObject();
+	
 	//Draw loop
 	while(!glfwWindowShouldClose(wnd)){
 		//Processes needed for every loop iteration 
@@ -43,22 +40,20 @@ int main(void){
 		glUseProgram(shaderProgram);
 		
         updateUniformColor(shaderProgram, "uniformColor", uniValues);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0,3);
-
+		//DrawObjects(VAOs, 2);
+		glBindVertexArray(new->VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		//Ending a loop iteration
 		EndLap(wnd);
 	}
 	
-	glDeleteVertexArrays(1, &VAO);
+	//glDeleteVertexArrays(2, VAOs);
 
     glDeleteProgram(shaderProgram);
 
 	glfwTerminate();
 	return 0;
 }
-
-
 
 
 void BufferObject(){
@@ -77,9 +72,23 @@ void BufferObject(){
 	glEnableVertexAttribArray(0);
 }
 
-void DrawObjects(unsigned int* VAO, int size){
+void DrawObjects(unsigned int* VAOs, int size){
 	for (int i = 0; i < size; i++){
-		glBindVertexArray(VAO[i]);
-		glDrawArrays(GL_TRIANGLES, 0,3);
+		glBindVertexArray(VAOs[i]);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
+	glBindVertexArray(0);
+}
+
+void StartLap(){
+	float colorArray[4] = {0.2f, 0.3f, 0.3f, 1.0f};
+    glClearColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+	glClear(GL_COLOR_BUFFER_BIT);
+    
+    return;
+}
+
+void EndLap(GLFWwindow* wnd){
+    glfwSwapBuffers(wnd);
+    glfwPollEvents();
 }

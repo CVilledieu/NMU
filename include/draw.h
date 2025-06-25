@@ -3,11 +3,17 @@
 
 #include <GLFW/glfw3.h>
 
-//Draw loop support functions
-void StartLap();
-void EndLap(GLFWwindow* wnd);
+typedef struct Object {
+    unsigned int VAO;
+    unsigned int size;
+}Object;
 
+
+Object* createObject(void);
 void updateUniformColor(unsigned int ShaderProgID, const char* uniformName, float newValues[4]);
-float* GetVertexArray(void);
+
+
+void new_EBO(float x, float y, float z, float r);
+void BindMultiplePixels(unsigned int* VAOs);
 
 #endif
