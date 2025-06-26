@@ -51,7 +51,7 @@ GLFWwindow* SetUpMainWindow(void){
 // Shader functions
 unsigned int ShaderProgram(){
 	unsigned int vertexShader;
-	vertexShader = VertexShader_Obj();
+	vertexShader = VertexShader();
 	if (vertexShader == 0){
 		return 0;
 	}

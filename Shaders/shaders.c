@@ -3,20 +3,6 @@
 
 #include <stdio.h>
 
-unsigned int VertexShader_Obj(void);
-unsigned int FragmentShader_Obj(void);
-
-
-const char* Get_vertexShaderSource(void){
-const char* vertexShaderSource = 
-	"#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main(){\n"
-        "gl_Position = vec4(aPos, 1.0);\n"
-    "}\n\0";
-    return vertexShaderSource;
-}
-
 const char* Get_fragShaderSource(void){
 const char* fragShaderSource = 
 	"#version 330 core\n"
@@ -28,10 +14,22 @@ const char* fragShaderSource =
     return fragShaderSource;
 }
 
-unsigned int VertexShader_Obj(void){
+const char* VertexShaderSource(void){
+	const char* shader = 
+		"#version 330 core\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"uniform mat4 view;\n"
+		"uniform vec3 move;\n"
+		"void main(){\n"
+			"gl_Position = view * vec4((aPos + move), 1.0);\n"
+		"}\n\0";
+		return shader;
+}
+
+unsigned int VertexShader(void){
 	unsigned int vso;
 	vso = glCreateShader(GL_VERTEX_SHADER);
-	const char* vsrc = Get_vertexShaderSource();
+	const char* vsrc = VertexShaderSource();
 	glShaderSource(vso, 1, &vsrc, NULL);
 	glCompileShader(vso);
 	int ok =0;

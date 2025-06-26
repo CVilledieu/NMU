@@ -7,10 +7,12 @@
 #include <shaders.h>
 #include <stdlib.h>
 
+
 typedef struct App {
 	GLFWwindow* wnd;
 	unsigned int ShaderID;
 }App;
+
 
 App* Init();
 GLFWwindow* SetUpMainWindow(void);

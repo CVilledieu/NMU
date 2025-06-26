@@ -2,8 +2,8 @@
 #define SHADERS_H
 
 
-unsigned int VertexShader_Obj(void);
-unsigned int FragmentShader_Obj(void);
 
+unsigned int FragmentShader_Obj(void);
+unsigned int VertexShader(void);
 
 #endif

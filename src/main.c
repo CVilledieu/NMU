@@ -1,6 +1,5 @@
 #include <init.h>
-#include <draw.h>
-
+#include <objects.h>
 
 //Draw loop support functions
 void StartLap();
@@ -9,14 +8,13 @@ void EndLap(GLFWwindow* wnd);
 int main(void){
 	App* app = Init();
 
-	float uniValues[4] = {0.0, 1.0, 0.0, 1.0};
-	float uniformValues[4] = {0.0, 1.0, 1.0, 1.0};
-	float loc[4] = {0.0, 0.0, 0.0, 0.5};
-	float loc2[4] = {0.1, -0.5, 0.0, 0.5};
-	Object *newObject = CreateObject(loc,app->ShaderID);
-	Object *secondObject = CreateObject(loc2, app->ShaderID);
-	setObjectColor(newObject, uniValues);
-	setObjectColor(secondObject, uniformValues);
+	float obj1Color[4] = {0.0, 1.0, 0.0, 1.0};
+	float obj2Color[4] = {0.0, 1.0, 1.0, 1.0};
+	float loc[4] = {0.3, 0.0, 0.0, 0.5};
+	float loc2[4] = {-0.8, -0.5, 0.0, 0.5};
+	Object *newObject = CreateObject(loc,app->ShaderID, obj1Color);
+	Object *secondObject = CreateObject(loc2, app->ShaderID, obj2Color);
+
 
 	//Draw loop
 	while(!glfwWindowShouldClose(app->wnd)){
@@ -27,8 +25,7 @@ int main(void){
 		glUseProgram(app->ShaderID);
 		DrawObject(newObject);
 		DrawObject(secondObject);
-		float changingLocation[4] = {0, 0.002f, 0, 0};
-		MoveObject(secondObject, changingLocation);
+
 		//Ending a loop iteration
 		EndLap(app->wnd);
 	}

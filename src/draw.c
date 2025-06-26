@@ -1,30 +1,17 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <draw.h>
+#include <init.h>
+#include <objects.h>
 
-unsigned int *createArrayObject(float location[4]);
 
-Object *CreateObject(float Location[4], unsigned int ShaderID){
-    Object *new = malloc(sizeof(*new));
-    new->VAO = createArrayObject(Location);
-    new->shaderId = ShaderID;
-    new->location = Location;
-    return new;
-}
 
-void updateUniformColor(unsigned int ShaderProgID, const char* uniformName, float newValues[4]){
-    int vertexColorLocation = glGetUniformLocation(ShaderProgID, uniformName);
-    glUniform4fv(vertexColorLocation,1, newValues);
-}
-
-void setObjectColor(Object *obj, float color[4]){
-    obj->colorValue = color;
-}
-
+/*
 void DrawObject(Object *obj){
     int ColorLoction = glGetUniformLocation(obj->shaderId, "uniformColor");
     glUniform4fv(ColorLoction, 1, obj->colorValue);
+    float scale[3] = {1.0f, 1.0f, 1.0f}; 
+    float rotate[3] = {0.0f, 0.5f, 0.0f};
+    viewMatrix(obj, scale, rotate);
+    float cross[3] = {-0.5f, 0.0f, 0.0f}; 
+    moveVec3(obj,cross);
     glBindVertexArray(*(obj->VAO));
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -76,3 +63,4 @@ unsigned int *createArrayObject(float location[4]){
     glDeleteBuffers(1,&VBO);
     return VAO;
 }
+*/
