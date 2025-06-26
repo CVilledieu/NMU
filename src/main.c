@@ -1,5 +1,6 @@
 #include <init.h>
 #include <objects.h>
+#include <util.h>
 
 //Draw loop support functions
 void StartLap();
@@ -9,13 +10,9 @@ int main(void){
 	App* app = Init();
 
 	float obj1Color[4] = {0.0, 1.0, 0.0, 1.0};
-	float obj2Color[4] = {0.0, 1.0, 1.0, 1.0};
 	float loc[4] = {0.3, 0.0, 0.0, 0.5};
-	float loc2[4] = {-0.8, -0.5, 0.0, 0.5};
 	Object *newObject = CreateObject(loc,app->ShaderID, obj1Color);
-	Object *secondObject = CreateObject(loc2, app->ShaderID, obj2Color);
-
-
+	Object *Player = CreatePlayer(app->ShaderID);
 	//Draw loop
 	while(!glfwWindowShouldClose(app->wnd)){
 		//Processes needed for every loop iteration 
@@ -24,7 +21,7 @@ int main(void){
 
 		glUseProgram(app->ShaderID);
 		DrawObject(newObject);
-		DrawObject(secondObject);
+		DrawObject(Player);
 
 		//Ending a loop iteration
 		EndLap(app->wnd);
@@ -36,8 +33,8 @@ int main(void){
 }
 
 void StartLap(){
-	float colorArray[4] = {0.2f, 0.3f, 0.3f, 1.0f};
-    glClearColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+	float* backgroundColor = AdjustedColorArray(60,60,60, 1);
+    glClearColor(backgroundColor[0],backgroundColor[1],backgroundColor[2],backgroundColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     return;
 }

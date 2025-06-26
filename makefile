@@ -4,9 +4,10 @@ CFLAGS = -I./include -Wall
 LDFLAGS = -Llibs -lglfw3dll -lglfw3 -lopengl32
 
 SRC = $(patsubst %.c, %.o, $(wildcard src/*.c))
+ObjectSrc = $(patsubst %.c, %.o, $(wildcard src/objects/*.c))
 Shaders = $(patsubst %.c, %.o, $(wildcard Shaders/*.c))
 
-Project_Dirs = $(SRC) $(Shaders)
+Project_Dirs = $(SRC) $(ObjectSrc) $(Shaders) 
 
 NAME_OUTPUT = -o bin/App
 
