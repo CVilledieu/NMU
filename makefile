@@ -1,4 +1,5 @@
 CC = gcc
+oCC = @gcc
 
 CFLAGS = -I./include -Wall 
 LDFLAGS = -Llibs -lglfw3dll -lglfw3 -lopengl32
@@ -15,7 +16,7 @@ NAME_OUTPUT = -o bin/App
 all: build clean
 
 %.o: %.c 
-	$(CC) -c $(CFLAGS) $^ -o $@
+	$(oCC) -c $(CFLAGS) $^ -o $@
 
 build: $(Project_Dirs)
 	$(CC)  $^ $(LDFLAGS)   $(NAME_OUTPUT) 
@@ -27,5 +28,4 @@ build: $(Project_Dirs)
 .PHONY: clean
 
 clean:
-	rm -rf src/*.o
-	rm -rf shaders/*.o
+	@find . -type f -name '*.o' -delete

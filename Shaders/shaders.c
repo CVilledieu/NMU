@@ -19,9 +19,10 @@ const char* VertexShaderSource(void){
 		"#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"uniform mat4 view;\n"
-		"uniform vec3 move;\n"
+		"uniform mat4 model;\n"
+		"uniform mat4 world;\n"
 		"void main(){\n"
-			"gl_Position = view * vec4((aPos + move), 1.0);\n"
+			"gl_Position = model * view * world * vec4(aPos, 1.0);\n"
 		"}\n\0";
 		return shader;
 }

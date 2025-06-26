@@ -1,22 +1,22 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
+#include <util.h>
+
 
 typedef struct Object {
-    unsigned int shaderId;
     float *colorValue;
     float *Position;
-    float deltaY;
-    float deltaX;
+    float size;
     unsigned int *VAO;
 }Object;
 
-Object *CreatePlayer(unsigned int ShaderId);
+Object *CreatePlayer();
 
 void SetCameraView(Object *obj);
-void moveObject(Object *obj, float dX, float dY);
+void SetModel(Object *obj);
 void DrawObject(Object *obj);
 unsigned int *createArrayObject();
-Object *CreateObject(float startingPos[4], unsigned int ShaderID, float color[4]);
+Object *CreateObject(float startingPos[3], float color[4]);
 
 #endif

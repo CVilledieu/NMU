@@ -3,6 +3,8 @@
         "glfw3.h": "c",
         "glad.h": "c",
         "stdlib.h": "c",
-        "objects.h": "c"
+        "objects.h": "c",
+        "init.h": "c",
+        "stdio.h": "c"
     }
 }
