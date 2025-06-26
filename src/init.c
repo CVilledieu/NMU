@@ -1,6 +1,4 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <stdio.h>
+#include <init.h>
 
 #define STARTING_WIDTH 800
 #define STARTING_HEIGHT 600
@@ -9,6 +7,14 @@
 // Callbacks
 void framebuffer_size_callback(GLFWwindow* wnd, int width, int height);
 void keyPressCallback(GLFWwindow* wnd, int key, int scancode, int action, int mods);
+
+App* Init(){
+	App* app = malloc(sizeof(*app));
+	app->wnd = SetUpMainWindow();
+	app->ShaderID = ShaderProgram();
+	glEnable(GL_DEPTH_TEST);
+	return app;
+}
 
 
 //The initial steps needed to draw a window
@@ -41,6 +47,33 @@ GLFWwindow* SetUpMainWindow(void){
     return wnd;
 }
 
+
+// Shader functions
+unsigned int ShaderProgram(){
+	unsigned int vertexShader;
+	vertexShader = VertexShader_Obj();
+	if (vertexShader == 0){
+		return 0;
+	}
+
+	unsigned int fragmentShader;
+	fragmentShader = FragmentShader_Obj();
+	if (!fragmentShader){
+		return 0;
+	}
+
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	return shaderProgram;
+}
+
 void keyPressCallback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
 	if (action != GLFW_PRESS){
 		return;
@@ -59,3 +92,4 @@ void keyPressCallback(GLFWwindow* wnd, int key, int scancode, int action, int mo
 void framebuffer_size_callback(GLFWwindow* wnd, int width, int height){
 	glViewport(0,0,width, height);
 }
+

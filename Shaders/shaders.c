@@ -28,32 +28,6 @@ const char* fragShaderSource =
     return fragShaderSource;
 }
 
-// Shader functions
-unsigned int ShaderProgram(){
-	unsigned int vertexShader;
-	vertexShader = VertexShader_Obj();
-	if (vertexShader == 0){
-		return 0;
-	}
-
-	unsigned int fragmentShader;
-	fragmentShader = FragmentShader_Obj();
-	if (!fragmentShader){
-		return 0;
-	}
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	return shaderProgram;
-}
-
 unsigned int VertexShader_Obj(void){
 	unsigned int vso;
 	vso = glCreateShader(GL_VERTEX_SHADER);

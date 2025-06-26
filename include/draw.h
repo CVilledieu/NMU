@@ -4,16 +4,18 @@
 #include <GLFW/glfw3.h>
 
 typedef struct Object {
-    unsigned int VAO;
-    unsigned int size;
+    unsigned int shaderId;
+    float *colorValue;
+    float *location;
+    unsigned int *VAO;
 }Object;
 
-
-Object* createObject(void);
+Object *CreateObject(float location[4], unsigned int ShaderID);
+unsigned int *createArrayObject(float location[4]);
 void updateUniformColor(unsigned int ShaderProgID, const char* uniformName, float newValues[4]);
+void setObjectColor(Object *obj, float color[4]);
+void DrawObject(Object *obj);
+void MoveObject(Object *obj, float *delta);
 
-
-void new_EBO(float x, float y, float z, float r);
-void BindMultiplePixels(unsigned int* VAOs);
 
 #endif
