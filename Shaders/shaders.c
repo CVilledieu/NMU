@@ -1,7 +1,4 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <stdio.h>
+#include <masterheader.h>
 
 const char* Get_fragShaderSource(void){
 const char* fragShaderSource = 
@@ -18,11 +15,11 @@ const char* VertexShaderSource(void){
 	const char* shader = 
 		"#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
+		"uniform mat4 projection;\n"
 		"uniform mat4 view;\n"
 		"uniform mat4 model;\n"
-		"uniform mat4 world;\n"
 		"void main(){\n"
-			"gl_Position = model * view * world * vec4(aPos, 1.0);\n"
+			"gl_Position = vec4(aPos, 1.0);\n"
 		"}\n\0";
 		return shader;
 }

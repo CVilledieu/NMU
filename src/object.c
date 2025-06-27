@@ -1,4 +1,4 @@
-#include <util.h>
+#include <masterheader.h>
 
 void viewMatrix(float scale[3], float rotate[3]){
     float Matrix[16] = {
@@ -11,17 +11,6 @@ void viewMatrix(float scale[3], float rotate[3]){
     glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
 }
 
-void DrawObject(Object *obj){
-    int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");
-    glUniform4fv(ColorLoction, 1, obj->colorValue);
-
-    //Orientate Object based on world constants for size and angle
-    SetCameraView(obj);
-    SetModel(obj);    
-    glBindVertexArray(*(obj->VAO));
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-}
 
 
 unsigned int *createArrayObject(){

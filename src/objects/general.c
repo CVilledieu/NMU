@@ -1,4 +1,4 @@
-#include <util.h>
+#include <masterheader.h>
 
 
 typedef struct Object {
@@ -35,9 +35,6 @@ void SetCameraView(Object *obj){
     int uniformLocation = glGetUniformLocation(ShaderId, "view");
     glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
 }
-
-
-
 
 void SetModel(Object *obj){
     float tX = obj->Position[0];

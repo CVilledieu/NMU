@@ -5,6 +5,8 @@
         "stdlib.h": "c",
         "objects.h": "c",
         "init.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "unistd.h": "c",
+        "masterheader.h": "c"
     }
 }
