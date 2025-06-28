@@ -20,11 +20,9 @@ all: build clean
 
 
 $(objDir)/%.o: %.c 
-	
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 build: $(Project_Dirs)
-	@echo "Building..."
 	$(CC)  $^ $(LDFLAGS)   $(NAME_OUTPUT) 
 
 

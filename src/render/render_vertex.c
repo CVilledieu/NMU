@@ -1,16 +1,5 @@
 #include <masterheader.h>
 
-void viewMatrix(float scale[3], float rotate[3]){
-    float Matrix[16] = {
-        scale[0],   0,          0,          rotate[0],
-        0,          scale[1],   0,          rotate[1],
-        0,          0,          scale[2],   rotate[2],
-        0,          0,          0,          1
-    };
-    int uniformLocation = glGetUniformLocation(ShaderId, "view");
-    glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
-}
-
 
 
 unsigned int *createArrayObject(){

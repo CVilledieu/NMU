@@ -11,6 +11,7 @@ const char* fragShaderSource =
     return fragShaderSource;
 }
 
+
 const char* VertexShaderSource(void){
 	const char* shader = 
 		"#version 330 core\n"

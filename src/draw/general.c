@@ -50,3 +50,22 @@ void SetModel(Object *obj){
     int uniformLocation = glGetUniformLocation(ShaderId, "model");
     glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, Matrix);
 }
+
+void DrawObjects(unsigned int ShadeId, Object **objs, int size){
+    glUseProgram(ShadeId);
+    for (int i = 0; i < size; i++){
+        DrawObject(objs[i]);
+    }
+}
+
+void DrawObject(Object *obj){
+    int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");
+    glUniform4fv(ColorLoction, 1, obj->colorValue);
+
+    //Orientate Object based on world constants for size and angle
+    
+    glBindVertexArray(*(obj->VAO));
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
