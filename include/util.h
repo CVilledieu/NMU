@@ -4,19 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <stdio.h>
-#include <stdlib.h>
 
-#include <objects.h>
-#include <shaders.h>
-
-
-
-
-
-//Draw loop functions
-
-void DrawObjects(unsigned int ShadeId, Object **objs, int size);
 
 //Main set up functions
 void SetUpMainWindow(void);

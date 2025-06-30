@@ -1,7 +1,6 @@
 #include <masterHeader.h>
 
 
-Object* current; 
 
 void DrawTitle(void){
 	

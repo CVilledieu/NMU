@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <objects.h>
+
 #include <shaders.h>
 #include <util.h>
 #include <state.h>
@@ -26,5 +26,13 @@ extern enum GameState en_activeState;
 extern int gi_Height;
 extern int gi_Width;
 extern float BackgroundColor[4];
+
+
+typedef struct Object{
+    float *Color_Vec4;
+    float *Model_mat4;
+    float *VertexObj_VAO;
+}Object;
+
 
 #endif

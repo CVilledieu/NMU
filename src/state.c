@@ -51,7 +51,7 @@ void UpdateState(enum GameState newState){
 			SetProjectionMatrix();
     		SetViewMatrix();    
    			SetModelMatrix();
-			current = CreateObject(Position, Color);
+
 			break;
 		case MAIN_MENU:
 			glfwSetKeyCallback(wnd, Menu_Key_Callback);

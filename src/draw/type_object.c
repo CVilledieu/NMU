@@ -11,13 +11,14 @@ typedef struct Object{
 
 
 
-void DrawObject(Object *obj){
+void BindObject(Object *obj){
     int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");
-    glUniform4fv(ColorLoction, 1, obj->colorValue);
-
- 
+    glUniform4fv(ColorLoction, 1, obj->Color_Vec4);
     
-    glBindVertexArray(*(obj->VAO));
+    int ModelLocation = glGetUniformLocation(ShaderId, "model");
+    glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, obj->Model_mat4);
+    
+    glBindVertexArray(*(obj->VertexObj_VAO));
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }

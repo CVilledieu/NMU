@@ -1,6 +1,9 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include "masterHeader.h"
+
+
 enum GameState {
     TITLE,
 	MAIN_MENU,
@@ -8,7 +11,7 @@ enum GameState {
     GAME,
 };
 
-extern Object* current; 
+extern struct Object *current; 
 
 void SetBackgroundColor(void);
 void UpdateState(enum GameState newState);
