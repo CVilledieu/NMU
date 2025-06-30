@@ -20,7 +20,7 @@ const char* VertexShaderSource(void){
 		"uniform mat4 view;\n"
 		"uniform mat4 model;\n"
 		"void main(){\n"
-			"gl_Position = vec4(aPos, 1.0);\n"
+			"gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
 		"}\n\0";
 		return shader;
 }

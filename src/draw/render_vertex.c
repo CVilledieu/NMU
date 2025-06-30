@@ -2,7 +2,7 @@
 
 
 
-unsigned int *createArrayObject(){
+unsigned int *square_VAO(){
     unsigned int *VAO = malloc(sizeof(*VAO));
     glGenVertexArrays(1, VAO);
     glBindVertexArray(*VAO);
@@ -33,3 +33,4 @@ unsigned int *createArrayObject(){
     glDeleteBuffers(1,&VBO);
     return VAO;
 }
+
