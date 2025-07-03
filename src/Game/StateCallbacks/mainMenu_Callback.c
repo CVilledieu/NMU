@@ -1,7 +1,6 @@
-#include <masterHeader.h>
+#include "state.h"
 
-//Callback function
-void Game_Key_Callback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
+void Menu_Key_Callback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
 	if (action != GLFW_PRESS){
 		return;
 	}
@@ -10,7 +9,7 @@ void Game_Key_Callback(GLFWwindow* wnd, int key, int scancode, int action, int m
 			glfwSetWindowShouldClose(wnd,1);
 			break;
 		case GLFW_KEY_SPACE:
-			UpdateState(TITLE);
+			UpdateState(SETTINGS);
 			break;
 		default:
 			break;

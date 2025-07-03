@@ -1,18 +1,59 @@
 #include <glad/glad.h>
 #include "Shader.h"
-#include "Primitives/model.h"
-#include "Primitives/mesh.h"
+#include "DrawAPI/Primitives.h"
 
-// Target: Object/Model itself. 
-// Describes the object's size, orientation, and position
-// Achieved by: Transforms from object's local coordinate space (model space) to world space
-void SetModelMatrix(){
-	glUseProgram(ShaderId);
+
+void SetModel(Model *model){
+    SetMeshVOs(model->Mesh);
+    SetColorVec(model->ColorVec);
+    GetModelMatrix(model->xformMatrix);
+}
+
+
+void GetModelMatrix(float *ModelMatrix){
+
     //Global scaling values
     //float ScreenAspect = (float)(gi_Width / gi_Height);
     //float sX = ScreenAspect / 60.0f;
     float sX = 1.0f;
-	float sY = 1.0;
+	float sY = 1.0f;
+    float sZ = 1.0f;
+
+    //Column A = x || Column B = y || Column C = z
+    float Matrix[16] = {
+         sX,  0.0, 0.0, 0.0,
+        0.0,   sY, 0.0, 0.0,
+        0.0,  0.0,  sZ, 0.0,
+        0.0,  0.0, 0.0, 1.0, //translation Row
+    };
+    ModelMatrix = Matrix;
+}
+
+void UpdateXformMatrix(float *xMatrix){
+    float sX = 1.0f;
+	float sY = 1.0f;
+    float sZ = 1.0f;
+
+    float Matrix[16] = {
+         sX,  0.0, 0.0, 0.0,
+        0.0,   sY, 0.0, 0.0,
+        0.0,  0.0,  sZ, 0.0,
+        0.0,  0.0, 0.0, 1.0, //translation Row
+    };
+    xMatrix = Matrix;
+}
+
+
+// Target: Object/Model itself. 
+// Describes the object's size, orientation, and position
+// Achieved by: Transforms from object's local coordinate space (model space) to world space
+void SetModelMatrix(float *ModelMatrix){
+	glUseProgram(Shader.Id);
+    //Global scaling values
+    //float ScreenAspect = (float)(gi_Width / gi_Height);
+    //float sX = ScreenAspect / 60.0f;
+    float sX = 1.0f;
+	float sY = 1.0f;
     float sZ = 1.0f;
 
     //Column A = x || Column B = y || Column C = z
@@ -23,7 +64,7 @@ void SetModelMatrix(){
         0.0,  0.0, 0.0, 1.0, //translation Row
     };
 
-    int uniformLocation = glGetUniformLocation(ShaderId, "world");
+    int uniformLocation = glGetUniformLocation(Shader.Id, "world");
     glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
 }
 
@@ -31,10 +72,10 @@ void SetModelMatrix(){
 
 
 void BindObject(Object *obj){
-    int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");
+    int ColorLoction = glGetUniformLocation(Shader.Id, "uniformColor");
     glUniform4fv(ColorLoction, 1, obj->Color_Vec4);
     
-    int ModelLocation = glGetUniformLocation(ShaderId, "model");
+    int ModelLocation = glGetUniformLocation(Shader.Id, "model");
     glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, obj->Model_mat4);
     
     glBindVertexArray(*(obj->VertexObj_VAO));

@@ -1,10 +1,10 @@
-#include <masterHeader.h>
-
+#include "state.h"
+#include "Shader.h"
 
 
 void DrawTitle(void){
 	
-	glUseProgram(ShaderId);
+	glUseProgram(Shader.Id);
 	DrawObject(current);
 
 }

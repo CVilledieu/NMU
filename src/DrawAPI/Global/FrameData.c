@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include "Shader.h"
-#include "Primitives/model.h"
+#include "DrawAPI/Primitives.h"
 
 typedef struct FrameData{
     float **View_Matrix;
