@@ -1,4 +1,10 @@
-#include <masterheader.h>
+#include "state.h"
+#include "wnd.h"
+#include "draw.h"
+
+enum GameState en_activeState = TITLE;
+float BackgroundColor[4] = {0.0,0.0,0.0,1.0};
+
 
 
 enum GameState {
@@ -8,7 +14,6 @@ enum GameState {
     GAME,
 };
 
-enum GameState en_activeState = TITLE;
 
 void SetBackgroundColor(void){
 	switch (en_activeState){

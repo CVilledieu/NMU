@@ -1,10 +1,11 @@
-#include <masterheader.h>
+#include <glad/glad.h>
+
 
 const char* Get_fragShaderSource(void){
 const char* fragShaderSource = 
 	"#version 330 core\n"
     "out vec4 Fragment;\n"
-    "uniform vec4 uniformColor;\n"
+    "uniform vec4 color;\n"
     "void main(){\n"
         "Fragment = uniformColor;\n"
     "}\n\0";
@@ -29,7 +30,7 @@ unsigned int VertexShader(void){
 	unsigned int vso;
 	vso = glCreateShader(GL_VERTEX_SHADER);
 	const char* vsrc = VertexShaderSource();
-	glShaderSource(vso, 1, &vsrc, NULL);
+	glShaderSource(vso, 1, &vsrc, (void*)0);
 	glCompileShader(vso);
 	int ok =0;
 	glGetShaderiv(vso, GL_COMPILE_STATUS, &ok);
@@ -44,7 +45,7 @@ unsigned int FragmentShader_Obj(void){
 	unsigned int fso;
 	fso = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* fsrc = Get_fragShaderSource();
-	glShaderSource(fso, 1, &fsrc, NULL);
+	glShaderSource(fso, 1, &fsrc, (void*)0);
 	glCompileShader(fso);
 
 	int ok = 0;

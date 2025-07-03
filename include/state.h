@@ -1,8 +1,11 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "masterHeader.h"
+#include <glfw/glfw3.h>
+#include <draw.h>
 
+extern enum GameState en_activeState;
+extern float BackgroundColor[4];
 
 enum GameState {
     TITLE,

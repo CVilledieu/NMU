@@ -1,4 +1,4 @@
-#include <masterheader.h>
+#include <globalVariables.h>
 
 
 
@@ -33,4 +33,12 @@ unsigned int *square_VAO(){
     glDeleteBuffers(1,&VBO);
     return VAO;
 }
+
+typedef struct Element {
+    int nInd;
+    float *Vertices;
+    float SizeOf;
+}Element;
+
+unsigned int *ElementBuffer()
 

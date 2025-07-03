@@ -1,15 +1,19 @@
-#include <masterheader.h>
-
-
+#include <glad/glad.h>
+#include "Shader.h"
 
 typedef struct Object{
-    float *Color_Vec4;
-    float *Model_mat4;
-    float *VertexObj_VAO;
+    unsigned int VAO;
+    float **Color_Vec4;
+    float **Model_mat4;
+    float **Verticies_f3v;    
+    
 }Object;
 
 
 
+Object* Create_Object(){
+    Object *NewObject = 
+}
 
 void BindObject(Object *obj){
     int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");

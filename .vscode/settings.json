@@ -7,6 +7,8 @@
         "init.h": "c",
         "stdio.h": "c",
         "unistd.h": "c",
-        "masterheader.h": "c"
+        "masterheader.h": "c",
+        "globalvariables.h": "c",
+        "cstdlib": "c"
     }
 }
