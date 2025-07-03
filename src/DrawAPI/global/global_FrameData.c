@@ -1,7 +1,19 @@
 #include <glad/glad.h>
-#include "draw.h"
-#include "state.h"
 #include "Shader.h"
+#include "Primitives/model.h"
+
+typedef struct FrameData{
+    float **View_Matrix;
+    float **Proj_Matrix;
+    Object *Renderables;
+}FrameData;
+
+FrameData CurrentFD;
+
+void SetFrameUniformsData(){
+    glUniformMatrix4fv(Shader.View_uniformLoc, 1, GL_FALSE, CurrentFD.View_Matrix);
+    glUniformMatrix4fv(Shader.Proj_uniformLoc, 1, GL_FALSE, CurrentFD.Proj_Matrix);
+}
 
 
 // Target: The "world itself"
@@ -30,7 +42,7 @@ void SetProjectionMatrix(){
 // Describes: Camera Position, Orientation, and direction it is facing
 // Achieved by: Transforms from world space to camera space (also known as eye space)
 void SetViewMatrix(){
-	glUseProgram(ShaderId);
+	glUseProgram(Shader.Id);
     //Global scaling values
     //float ScreenAspect = (float)(gi_Width / gi_Height);
     //float sX = ScreenAspect / 60.0f;
@@ -49,31 +61,3 @@ void SetViewMatrix(){
     int uniformLocation = glGetUniformLocation(ShaderId, "world");
     glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
 }
-
-
-/*
-// Model Matrix is in GameObjects.c
-// Target: Object/Model itself. 
-// Describes the object's size, orientation, and position
-// Achieved by: Transforms from object's local coordinate space (model space) to world space
-void SetModelMatrix(){
-	glUseProgram(ShaderId);
-    //Global scaling values
-    //float ScreenAspect = (float)(gi_Width / gi_Height);
-    //float sX = ScreenAspect / 60.0f;
-    float sX = 1.0f;
-	float sY = 1.0;
-    float sZ = 1.0f;
-
-    //Column A = x || Column B = y || Column C = z
-    float Matrix[16] = {
-         sX,  0.0, 0.0, 0.0,
-        0.0,   sY, 0.0, 0.0,
-        0.0,  0.0,  sZ, 0.0,
-        0.0,  0.0, 0.0, 1.0, //translation Row
-    };
-
-    int uniformLocation = glGetUniformLocation(ShaderId, "world");
-    glUniformMatrix4fv(uniformLocation,1,GL_FALSE, Matrix);
-}
-*/

@@ -9,6 +9,9 @@
         "unistd.h": "c",
         "masterheader.h": "c",
         "globalvariables.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "mesh.h": "c",
+        "shader.h": "c",
+        "model.h": "c"
     }
 }

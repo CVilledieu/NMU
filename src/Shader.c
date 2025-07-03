@@ -1,16 +1,5 @@
 #include "Shader.h"
 
-typedef struct ShaderPro{
-	unsigned int ID;
-	int Color_uniformLoc;
-	int Model_uniformLoc;
-	int View_uniformLoc;
-	int Proj_uniformLoc;
-}ShaderPro;
-
-
-unsigned int ShaderId = 0;
-
 ShaderPro Shader;
 
 void SetUniformLoc(void);

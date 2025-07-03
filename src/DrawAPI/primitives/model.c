@@ -1,35 +1,7 @@
 #include <glad/glad.h>
 #include "Shader.h"
-#include "state.h"
-
-typedef struct FrameData{
-    float **View_Matrix;
-    float **Proj_Matrix;
-    Object *Renderables;
-}FrameData;
-
-FrameData CurrentFD;
-
-typedef struct Object{
-    unsigned int ID;
-    struct Mesh *Mesh;
-    Uniforms_Model *uniforms;
-}Object;
-
-typedef struct Uniforms_Model{
-    float **Color_Vec4;
-    float **Model_Mat4fv;
-} Uniforms_Model;
-
-typedef struct Mesh{
-    unsigned int VAO;
-    unsigned int VBO;        // Track for cleanup & updates
-    unsigned int EBO;        // Track for cleanup
-    int vertexCount;
-    int indexCount;
-    unsigned int *IndexList; // CPU copy of index data
-    float *Vertices;         // CPU copy of vertex data
-} Mesh;
+#include "Primitives/model.h"
+#include "Primitives/mesh.h"
 
 // Target: Object/Model itself. 
 // Describes the object's size, orientation, and position
@@ -57,20 +29,6 @@ void SetModelMatrix(){
 
 
 
-void SetFrameUniformsData(){
-    glUniformMatrix4fv(Shader.View_uniformLoc, 1, GL_FALSE, CurrentFD.View_Matrix);
-    glUniformMatrix4fv(Shader.Proj_uniformLoc, 1, GL_FALSE, CurrentFD.Proj_Matrix);
-}
-
-void DrawObject(Object *Obj){
-    glUniform4fv(Shader.Color_uniformLoc, 1, Obj->Color_Vec4);
-    glUniformMatrix4fv(Shader.Model_uniformLocation,1, GL_FALSE, Obj->ModelMatrix);
-
-    glBindVertexArray(Obj->Model->VAO);
-
-
-}
-
 
 void BindObject(Object *obj){
     int ColorLoction = glGetUniformLocation(ShaderId, "uniformColor");
@@ -84,3 +42,11 @@ void BindObject(Object *obj){
 	glBindVertexArray(0);
 }
 
+void DrawModel(Object *Obj){
+    glUniform4fv(Shader.Color_uniformLoc, 1, Obj->Color_Vec4);
+    glUniformMatrix4fv(Shader.Model_uniformLocation,1, GL_FALSE, Obj->ModelMatrix);
+
+    glBindVertexArray(Obj->Model->VAO);
+
+
+}
