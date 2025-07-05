@@ -25,7 +25,5 @@ void Settings_Key_Callback(GLFWwindow* wnd, int key, int scancode, int action, i
 void Game_Key_Callback(GLFWwindow* wnd, int key, int scancode, int action, int mods);
 
 
-void DrawTitle(void);
-
 
 #endif

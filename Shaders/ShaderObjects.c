@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-
+#include <stdio.h>
 
 const char* Get_fragShaderSource(void){
 const char* fragShaderSource = 
@@ -7,7 +7,7 @@ const char* fragShaderSource =
     "out vec4 Fragment;\n"
     "uniform vec4 color;\n"
     "void main(){\n"
-        "Fragment = uniformColor;\n"
+        "Fragment = color;\n"
     "}\n\0";
     return fragShaderSource;
 }
@@ -18,10 +18,9 @@ const char* VertexShaderSource(void){
 		"#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"uniform mat4 projection;\n"
-		"uniform mat4 view;\n"
 		"uniform mat4 model;\n"
 		"void main(){\n"
-			"gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
+			"gl_Position = projection * model * vec4(aPos, 1.0);\n"
 		"}\n\0";
 		return shader;
 }

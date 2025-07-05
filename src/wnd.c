@@ -1,9 +1,32 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stdio.h>
 
 GLFWwindow* wnd = NULL;
 int gi_WndHeight = 600;
 int gi_WndWidth = 800;
+
+
+void framebuffer_size_callback(GLFWwindow* wnd, int width, int height){
+	gi_WndHeight = height;
+	gi_WndWidth = width;
+	glViewport(0,0,width, height);
+}
+
+void UserInput_Callback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
+	if (action != GLFW_PRESS){
+		return;
+	}
+	switch(key){
+		case GLFW_KEY_ESCAPE:
+			glfwSetWindowShouldClose(wnd,1);
+			break;
+		default:
+			break;
+	}
+	
+}
+
 
 //The initial steps needed to draw a window
 //Sets Callbacks for frame size changing and for when key is pressed
@@ -32,14 +55,9 @@ void SetUpMainWindow(void){
 	
 	//Callbacks found in wndCallbacks.c
 	glfwSetFramebufferSizeCallback(wnd, framebuffer_size_callback);
+	glfwSetKeyCallback(wnd, UserInput_Callback);
 	glEnable(GL_DEPTH_TEST);
-
+	
     return;
 }
 
-
-void framebuffer_size_callback(GLFWwindow* wnd, int width, int height){
-	gi_WndHeight = height;
-	gi_WndWidth = width;
-	glViewport(0,0,width, height);
-}

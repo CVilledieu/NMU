@@ -1,8 +1,11 @@
+#include <glad/glad.h>
+#include <glfw/glfw3.h>
+#include <stdio.h>
 #include "Shader.h"
 
 ShaderPro Shader;
 
-void SetUniformLoc(void);
+
 // Shader functions
 void CreateShaderProgram(){
 	unsigned int vertexShader;
@@ -26,13 +29,11 @@ void CreateShaderProgram(){
 	
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-	SetUniformLoc();
+
 	return;
 }
 
-void SetUniformLoc(){
-	Shader.Color_uniformLoc = glGetUniformLocation(Shader.ID, "color");
-	Shader.Model_uniformLoc = glGetUniformLocation(Shader.ID, "model");
-	Shader.View_uniformLoc = glGetUniformLocation(Shader.ID, "view");
-	Shader.Proj_uniformLoc = glGetUniformLocation(Shader.ID, "projection");
+
+void loadShader(){
+
 }

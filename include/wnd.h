@@ -1,6 +1,7 @@
 #ifndef MAINWND_H
 #define MAINWND_H
 
+#include <GLFW/glfw3.h>
 extern int gi_WndHeight;
 extern int gi_WndWidth;
 
