@@ -1,10 +1,11 @@
 #ifndef DRAWAPI_H
 #define DRAWAPI_H
 
+#include <glad/glad.h>
 
-//Primative types
+typedef float Vertex[6];
 
-typedef struct Mesh{
+typedef struct {
     unsigned int VBO;
     unsigned int EBO;
     unsigned int VAO; 
@@ -14,14 +15,29 @@ typedef struct Mesh{
     float *Vertices;
 } Mesh;
 
+typedef struct {
+    int VSize;
+    int DSize;
+    unsigned int *drawOrder;
+    Vertex vertex[4];    
+} vMesh;
 
-//Frame functions
-void SetProjectionUniform();
+typedef struct {
+    unsigned int ID;
+    unsigned int VBO;
+    unsigned int EBO;
+    unsigned int VAO;
+    float ModelMat4[16];
+    vMesh *mesh;
+} Model;
+
 
 //Mesh functions
 void SetMeshVOs(Mesh *mesh);
-void Cleanup_Mesh(Mesh *mesh);
-void DrawMesh(Mesh *mesh);
-
+void Cleanup_Model(Model *model);
+void DrawModel(Model *model);
+void SetModelVOs(Model *model);
+void SetNewMesh(vMesh *m);
+void SetModelMatrix(Model *model);
 
 #endif

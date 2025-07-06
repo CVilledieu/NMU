@@ -6,23 +6,22 @@
 #include "DrawAPI.h"
 
 
-void backdrop(){
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-
+void clearBuffer(void);
+unsigned int ShaderID;
 
 int main(void){
 	SetUpMainWindow();
-	CreateShaderProgram();
-	Mesh mesh;
-	SetMeshVOs(&mesh);
-
+	InitShaderProgram("Shaders/main.frag.glsl", "Shaders/main.vert.glsl");
+	Model model;
+	SetModelVOs(&model);
+	SetModelMatrix(&model);
+	int uniLoc = glGetUniformLocation(Shader.ID, "model");
+	glUseProgram(Shader.ID);
+	glUniformMatrix4fv(uniLoc, 1, GL_FALSE, model.ModelMat4); 
 	
 	while(!glfwWindowShouldClose(wnd)){
-		backdrop();
-		DrawMesh(&mesh);
+		clearBuffer();
+		DrawModel(&model);
 
 
 
@@ -30,11 +29,13 @@ int main(void){
     	glfwPollEvents();
 	}
 	
-	DrawLoop();
-
     glDeleteProgram(Shader.ID);
-	Cleanup_Mesh(&mesh);
+	Cleanup_Model(&model);
 	glfwTerminate();
 	return 0;
 }
 
+void clearBuffer(){
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}

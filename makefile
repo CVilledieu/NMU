@@ -11,7 +11,7 @@ OBJ_DIR = $(BIN_DIR)/objects
 INCLUDE_DIR = include
 
 # Find all C files recursively
-C_FILES = $(shell find $(SRC_DIR) -name "*.c") $(wildcard Shaders/*.c)
+C_FILES = $(shell find $(SRC_DIR) -name "*.c")
 OBJ_FILES = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
 TARGET = $(BIN_DIR)/$(PROJECT_NAME)
 
@@ -51,9 +51,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/*/*/%.c
 	@echo "Compiling $<..."
 	@$(CC) -c $(CFLAGS) $< -o $@
 
-$(OBJ_DIR)/%.o: Shaders/%.c
-	@echo "Compiling $<..."
-	@$(CC) -c $(CFLAGS) $< -o $@
 
 # Clean build artifacts
 clean:

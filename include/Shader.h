@@ -4,14 +4,15 @@
 
 
 
-typedef struct ShaderPro{
+typedef struct {
 	unsigned int ID;
+
 }ShaderPro;
 
 extern ShaderPro Shader;
+extern unsigned int ShaderID;
 
-void CreateShaderProgram(void);
-unsigned int FragmentShader_Obj(void);
-unsigned int VertexShader(void);
+void InitShaderProgram(char *FragfName, char *VertfName);
+
 
 #endif

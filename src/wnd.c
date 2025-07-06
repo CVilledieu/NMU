@@ -13,7 +13,12 @@ void framebuffer_size_callback(GLFWwindow* wnd, int width, int height){
 	glViewport(0,0,width, height);
 }
 
-void UserInput_Callback(GLFWwindow* wnd, int key, int scancode, int action, int mods){
+//Call back parameters:GLFWwindow* wnd, int key, int scancode, int action, int mods
+void UserInput_Callback(GLFWwindow* wind, int key, int scancode, int action, int mods){
+	//Currently unused Parameters, but required by Callback function
+	(void)wind;
+	(void)scancode;
+	(void)mods;
 	if (action != GLFW_PRESS){
 		return;
 	}
