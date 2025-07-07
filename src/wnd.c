@@ -26,7 +26,10 @@ void UserInput_Callback(GLFWwindow* wind, int key, int scancode, int action, int
 		case GLFW_KEY_ESCAPE:
 			glfwSetWindowShouldClose(wnd,1);
 			break;
+		case GLFW_KEY_W:
+			break;
 		default:
+
 			break;
 	}
 	

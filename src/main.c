@@ -1,36 +1,37 @@
 #include <glad/glad.h>
-#include <stdlib.h>
+#include <glfw/glfw3.h>
+
 #include <stdio.h>
 #include "wnd.h"
-#include "Shader.h"
 #include "DrawAPI.h"
+#include "GameObjects.h"
 
+Scene currentSc;
 
 void clearBuffer(void);
-unsigned int ShaderID;
 
 int main(void){
 	SetUpMainWindow();
 	InitShaderProgram("Shaders/main.frag.glsl", "Shaders/main.vert.glsl");
-	Model model;
-	SetModelVOs(&model);
-	SetModelMatrix(&model);
-	int uniLoc = glGetUniformLocation(Shader.ID, "model");
-	glUseProgram(Shader.ID);
-	glUniformMatrix4fv(uniLoc, 1, GL_FALSE, model.ModelMat4); 
-	
+
+	currentSc.ModCount = 0;
+	SetPlayerData();
+	//SetModelData(currentSc.ModCount); 
+
+	InitViewMat();
+
 	while(!glfwWindowShouldClose(wnd)){
 		clearBuffer();
-		DrawModel(&model);
 
-
+		DrawScene();
+		currentSc.ListOfModels[0]->ModelMat4[12] += (float).0005;
 
 		glfwSwapBuffers(wnd);
     	glfwPollEvents();
 	}
 	
-    glDeleteProgram(Shader.ID);
-	Cleanup_Model(&model);
+	CleanUpScene();
+    glDeleteProgram(currentSc.ShaderID);
 	glfwTerminate();
 	return 0;
 }
@@ -39,3 +40,4 @@ void clearBuffer(){
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+

@@ -2,24 +2,32 @@
 #include <glfw/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Shader.h"
+#include "DrawAPI.h"
 #include <string.h>
 
-ShaderPro Shader;
 
 unsigned int ccShader(char *fName, GLenum type);
 
 
 
 void InitShaderProgram(char *FragfName, char *VertfName){
-	Shader.ID = glCreateProgram();
-
+	currentSc.ShaderID = 0;
+	currentSc.ShaderID = glCreateProgram();
 	unsigned int FragID = ccShader(FragfName, GL_FRAGMENT_SHADER);
 	unsigned int VertID = ccShader(VertfName, GL_VERTEX_SHADER);
 
-	glAttachShader(Shader.ID, FragID);
-	glAttachShader(Shader.ID, VertID);
-	glLinkProgram(Shader.ID);
+	glAttachShader(currentSc.ShaderID, FragID);
+	glAttachShader(currentSc.ShaderID, VertID);
+	glLinkProgram(currentSc.ShaderID);
+
+	int ok = 0;
+	glGetProgramiv(currentSc.ShaderID, GL_LINK_STATUS, &ok);
+	if(!ok){
+		printf("Shaader failed to link");
+		glfwTerminate();
+	}
+
+
 	glDeleteShader(FragID);
 	glDeleteShader(VertID);
 }
@@ -55,34 +63,10 @@ unsigned int ccShader(char *fName, GLenum type ){
 	int ok = 0;
 	glGetShaderiv(shObj, GL_COMPILE_STATUS, &ok);
 	if(!ok){
+		glDeleteShader(shObj);
 		printf("%s\n", "Shader failed to compile");
 		glfwTerminate();
 	}
+	free(Src);
 	return shObj;
 }
-
-/*
-Old shaders
-const char* Get_fragShaderSource(void){
-const char* fragShaderSource = 
-	"#version 330 core\n"
-    "out vec4 Fragment;\n"
-    "uniform vec4 color;\n"
-    "void main(){\n"
-        "Fragment = color;\n"
-    "}\n\0";
-    return fragShaderSource;
-}
-
-
-const char* VertexShaderSource(void){
-	const char* shader = 
-		"#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"uniform mat4 projection;\n"
-		"uniform mat4 model;\n"
-		"void main(){\n"
-			"gl_Position = projection * model * vec4(aPos, 1.0);\n"
-		"}\n\0";
-		return shader;
-}*/
