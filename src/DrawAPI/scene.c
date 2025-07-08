@@ -6,8 +6,8 @@
 void InitViewMat(){
     
     Matrix mat = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 0.5f, 0.0f, 0.0f,
+        0.1f, 0.0f, 0.0f, 0.0f,
+        0.0f, 0.05f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };
@@ -19,7 +19,9 @@ void DrawScene(){
     int viewUniLoc = glGetUniformLocation(currentSc.ShaderID, "view");
     glUniformMatrix4fv(viewUniLoc, 1, GL_FALSE, currentSc.ViewMat4);
     for (int i =0; i < currentSc.ModCount; i++){
-        DrawModel(currentSc.ListOfModels[i]);
+        Model *model = currentSc.ListOfModels[i];
+        int modelUniLoc = glGetUniformLocation(currentSc.ShaderID, "model");
+        
     }
     
 }
