@@ -12,6 +12,7 @@
         "cstdlib": "c",
         "mesh.h": "c",
         "shader.h": "c",
-        "model.h": "c"
+        "model.h": "c",
+        "drawapi.h": "c"
     }
 }

@@ -1,4 +1,6 @@
 #include "DrawAPI.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static Square_VSize = 8;
 static Vertex Square_Vertices[] = {

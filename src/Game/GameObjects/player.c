@@ -1,4 +1,6 @@
 #include "DrawAPI.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static Player_VSize = 8;
 static Vertex Player_Vertices[] = {

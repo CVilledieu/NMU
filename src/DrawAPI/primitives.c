@@ -5,6 +5,11 @@
 #include <stdlib.h>
 
 
+void CreateMesh(Mesh *mesh, float height, float width){
+
+}
+
+
 //Initial function to easily create new meshs with different vertices
 void SetMesh(vMesh *mesh){
     

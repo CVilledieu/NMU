@@ -2,6 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 
+static Matrix ProjectionMatrix[16] = {
+    0.1f, 0.0f, 0.0f, 0.0f,
+    0.0f, 0.05f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f
+};
+
+static Matrix ViewMatrix[16] = {
+    0.1f, 0.0f, 0.0f, 0.0f,
+    0.0f, 0.05f, 0.0f, 0.0f,
+    0.0f, 0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 1.0f
+};
+
+
 
 void InitViewMat(){
     
@@ -14,10 +29,14 @@ void InitViewMat(){
     memcpy(currentSc.ViewMat4, mat, sizeof(Matrix));
 }
 
+
+
 void DrawScene(){
     glUseProgram(currentSc.ShaderID);
     int viewUniLoc = glGetUniformLocation(currentSc.ShaderID, "view");
-    glUniformMatrix4fv(viewUniLoc, 1, GL_FALSE, currentSc.ViewMat4);
+    glUniformMatrix4fv(viewUniLoc, 1, GL_FALSE, ViewMatrix);
+    int viewUniLoc = glGetUniformLocation(currentSc.ShaderID, "projection");
+    glUniformMatrix4fv(viewUniLoc, 1, GL_FALSE, ProjectionMatrix);
     for (int i =0; i < currentSc.ModCount; i++){
         Model *model = currentSc.ListOfModels[i];
         int modelUniLoc = glGetUniformLocation(currentSc.ShaderID, "model");
