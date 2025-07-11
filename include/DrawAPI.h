@@ -31,15 +31,13 @@ typedef struct {
     unsigned int EBO;
     unsigned int VAO;
     Matrix ModelMat4;
-    vMesh *mesh;
+    Mesh *mesh;
 } Model;
 
 
 typedef struct {
     unsigned int ShaderID;
     int ModCount;
-    Matrix ViewMat4;
-    Matrix ProjectionMat4;
     Model *ListOfModels[MAX_MODELS];
 
 } Scene;
@@ -47,8 +45,11 @@ typedef struct {
 //Global vars
 extern Scene currentSc;
 
+//Camera
+void UniformSet_View();
+void UniformSet_Projection();
+
 //Scene Functions
-void InitViewMat();
 void DrawScene();
 
 void CleanUpScene();

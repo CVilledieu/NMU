@@ -5,9 +5,6 @@
 #include <stdlib.h>
 
 
-void CreateMesh(Mesh *mesh, float height, float width){
-
-}
 
 
 //Initial function to easily create new meshs with different vertices
@@ -37,7 +34,7 @@ void SetMesh(vMesh *mesh){
 }
 
 void SetModelVOs(Model *model){
-    SetMesh(model->mesh);
+    //SetMesh(model->mesh);
     glGenVertexArrays(1, &model->VAO);
     glGenBuffers(1, &model->EBO);
     glGenBuffers(1, &model->VBO);
@@ -45,10 +42,10 @@ void SetModelVOs(Model *model){
     glBindVertexArray(model->VAO);
     
     glBindBuffer(GL_ARRAY_BUFFER, model->VBO);
-    glBufferData(GL_ARRAY_BUFFER, model->mesh->VSize*sizeof(Vertex), model->mesh->vertex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, model->mesh->VeSize*sizeof(Vertex), model->mesh->vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->mesh->DSize * sizeof(unsigned int), model->mesh->drawOrder, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->mesh->InSize * sizeof(unsigned int), model->mesh->DrawOrder, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE, sizeof(Vertex), (void*)0);
     glEnableVertexAttribArray(0);
@@ -90,7 +87,7 @@ void SetModelData(int ModelID){
     }
     
     SetMesh(newMesh);
-    newModel->mesh = newMesh;
+    //newModel->mesh = newMesh;
     SetModelVOs(newModel);
     SetModelMatrix(newModel); 
     newModel->ID = ModelID;
@@ -124,7 +121,7 @@ void DrawModel(Model *model){
     int modelUniLoc = glGetUniformLocation(currentSc.ShaderID, "model");
     glUniformMatrix4fv(modelUniLoc, 1, GL_FALSE, model->ModelMat4); 
 
-    glDrawElements(GL_TRIANGLES, model->mesh->DSize, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, model->mesh->InSize, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }

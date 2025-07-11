@@ -3,8 +3,6 @@
 
 void SetPlayerData();
 
-void SetSquareMesh(Mesh *mesh);
-void SetSquareData();
 
 
 

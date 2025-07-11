@@ -16,7 +16,7 @@ enum GameState {
 
 extern struct Object *current; 
 
-void SetBackgroundColor(void);
+
 void UpdateState(enum GameState newState);
 
 

@@ -2,29 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static Player_VSize = 8;
+static int Player_VSize = 4;
 static Vertex Player_Vertices[] = {
-    {-0.5,  0.5, 0.0, 1.0, 1.0, 0.0},
-    { 0.0,  0.5, 0.0, 1.0, 1.0, 0.0},
-    {-0.5,  0.0, 0.0, 1.0, 1.0, 0.0},
-    { 0.0,  0.0, 0.0, 1.0, 1.0, 0.0},
-
-    { 0.5, -0.5, 0.0, 0.0, 0.8, 0.8},
-    { 0.0, -0.5, 0.0, 1.0, 0.8, 0.8},
-    { 0.5,  0.0, 0.0, 1.0, 0.8, 0.8},
-    { 0.0,  0.0, 0.0, 1.0, 0.8, 0.8},
-
+    { 2.0,  2.0,  0.0,  1.0,  1.0,  0.0},
+    { 0.0,  2.0,  0.0,  1.0,  1.0,  0.0},
+    { 2.0,  0.0,  0.0,  1.0,  1.0,  0.0},
+    { 0.0,  0.0,  0.0,  1.0,  1.0,  0.0},
 };
 
-static Player_DSize = 12;
-static Player_DrawOrder[] = {0,1,2, 3,2,1,  4,5,6, 5,6,7};
+static int Player_DSize = 6;
+static int Player_DrawOrder[] = {0,1,2, 3,2,1};
 
 
 void SetPlayerMesh(Mesh *mesh){
 
-    mesh->VeSize = 8;
+    mesh->VeSize = 4;
     mesh->vertices = &Player_Vertices;
-    mesh->InSize = 12;
+    mesh->InSize = 6;
     mesh->DrawOrder = &Player_DrawOrder;
     
 }

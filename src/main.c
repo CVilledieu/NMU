@@ -18,7 +18,6 @@ int main(void){
 	SetPlayerData();
 	//SetModelData(currentSc.ModCount); 
 
-	InitViewMat();
 
 	while(!glfwWindowShouldClose(wnd)){
 		clearBuffer();
